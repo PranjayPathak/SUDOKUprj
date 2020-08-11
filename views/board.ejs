@@ -1,0 +1,49 @@
+<%- include("header"); -%>
+<p tabindex="0"> <%= mode %> <i class="arrow down"></i></p>
+<ul class="invisible">
+<li><a href="/diff/easy">Easy</a></li>
+<li><a href="/diff/medium">Medium</a></li>
+<li><a href="/diff/hard">Hard</a></li>
+<li><a href="/diff/hard">Expert</a></li>
+</ul>
+</div> 
+</div>
+<div class="full-timer" >
+<p class="tim" id="watch">00:00:00</p>
+<div  tabindex="0"  class="control_border"><div class=" control play" ></div></div>
+</div>
+</div>
+
+    
+<div class="tables">
+<div class="tablea">
+<table>
+<% for(var i=0 ;i<9;i++){ %>
+    <tr>    
+      <% for(var j=0 ;j<9;j++){ %>
+                   
+                  <% if(array[i][j] !== 0){ %>
+                    <td tabindex="0" class="<%=i+"x" %> cell <%=j+"y" %> fixed" >
+                       <%= array[i][j] %>
+                    </td>
+                  <%}else{%>
+                    <td  tabindex="0"  class="<%=i+"x" %> cell <%=j+"y" %> unfixed" >
+                    </td>
+
+             <%}%>
+         <% }%>
+    </tr>
+    <% }%>
+</table>
+</div>
+
+
+<div class="tableb">
+<% for(var x=1 ;x<=9;x++){ %>
+      <div  tabindex="0" class="mobg">
+      <%= x %>
+    </div>
+<%}%>
+</div>
+</div>
+<%- include("footer"); -%>
