@@ -60,21 +60,21 @@ nav{
   margin-top: 6px;
   display : flex;
   justify-content: space-around;
-  width:35%;
+  width:50%;
   }
 .nav_links a{
   text-align: center;
-  margin-top:15px;
-  padding-top: 7px;
-  display: block;
-  width: 200px;
-  height: 40px;
+  margin-top:10px;
+  padding-top: 12px;
+  /* display: block; */
+  width: 150px;
+  height: 50px;
   text-shadow: 0 0 6px rgb(100, 100, 100),
                0 0 2px rgb(37, 22, 22),
-               0 0 5px rgba(24,24,24);
+               0 0 5px #181818;
   color: rgba(200,200,200);
   text-decoration: none;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   font-weight: 300;
   font-size: 13px;
 }  
@@ -362,6 +362,7 @@ outline:none;
               ,0px 0px 20px 1px rgba(35,35,35)
               ,inset 0px -5px 10px 5px rgba(30,30,30);
 }
+
 /* /////////////////////////////////////////// */
 /* rules div */
 .rules{
@@ -409,9 +410,9 @@ footer{
 
 
 /* for tablet */
-@media screen and (max-width:950px){
+@media screen and (max-width:1020px){
   .nav_links{
-    width: 55%;
+    width: 60%;
   }
 } 
 
@@ -444,10 +445,10 @@ footer{
   margin-left: 1px;
 }
 .nav_links{
-   width: 90vw;
+   width: 95vw;
    position: absolute;
    display:block ;
-   right: 0px;  
+   right: -6px;  
    height: 90vh;
    top: 7vh;
    display: flex;

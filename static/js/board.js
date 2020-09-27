@@ -131,6 +131,8 @@ function next(i,j){
 
 // checks the number at specific index
 function check(arr,num,i,j){
+    console.log("arr: "+arr);
+    console.log(" num: "+num+" ("+i+","+j+")");
     arr[i][j]=0;
     let row=[];
     for(let m=0; m<9;m++){
@@ -149,6 +151,9 @@ function check(arr,num,i,j){
         grp.push(arr[m][n]);
        } 
     }
+    console.log("row: "+row);
+    console.log("col: "+col);
+    console.log("grp: "+grp);
     if(row.includes(num) || col.includes(num) || grp.includes(num)){
         return(false);
         
@@ -173,14 +178,18 @@ for (let i = 0; i < 9; i++) {
 return(a);
 }
 
-//checking all the elements of board 
+//checking all the elements of board
+let flag; 
+// false for wrong input in board
 function checkall(arr){
-    for(let i=0 ;i<9;i++){
+        flag=true;
+        for(let i=0 ;i<9;i++){
         for(let j=0 ;j<9;j++){
             let cellx= document.getElementsByClassName(""+i+"x "+j+"y")[0];
         if(!cellx.classList.contains("fixed") && arr[i][j]!=0){
               if(!check(board(),arr[i][j],i,j)){
                 cellx.style.color="rgba(190,30,30)";
+                flag=false;
               }else{
                 cellx.style.color="whitesmoke";
             } 
@@ -189,11 +198,8 @@ function checkall(arr){
       }
 }
 
+///////TIMER/////////////////
 
-
-
-////////////////////////////////////////
-///////timer/////////////////
 let seconds=0;
 let minutes=0;
 let hours=0;
@@ -267,7 +273,7 @@ function empty(arr){
         }
     }
     return(false);
-};
+};  
 
 
 
@@ -409,3 +415,139 @@ function restore(){
 
 //////saves the initial array
 save();
+
+
+/////////////////////////////////////////////////////
+////Final check
+let flagz=true;
+$(".submit").click(function(){
+    if(flagz){
+    flagz=false;    
+    
+    save();
+ let brd = board();
+ checkall(brd);
+ if(flag && !empty(brd)){
+     correct();
+ }else{
+     wrong();
+
+ }
+ setTimeout(function(){
+    flagz=true;
+  },700);
+    
+    }
+});
+
+function scorex(tim){
+    if(tim[0]>0){
+        return([" ","H","m","m","m",".",".","."]);
+    }else if(tim[2]<2){
+        return([" ","J","E","S","U","S","!"]);
+    }else if(tim[1]<10){
+        return("EXCELLENT".split(""));
+    }else if(tim[1]<20){
+        return(["G","O","O","D"," "," ","J","O","B"]);
+    }else if(tim[1]>20 && tim[1]<30){
+        return([" ","N","O","T"," ","B","A","D"]);
+    }else{
+        return([" ","G","O","O","D"]);
+    }
+};
+
+
+function correct(){
+    
+    $("button , .full-timer ,.drop ,.tableb").css("display","none");
+    $(".tablea").css("box-shadow","0px 0px 50px 1px cyan , 0px 0px 3px 5px white");
+    let a ="COMPLETED".split("");
+    let dif = $(".dif").text().toUpperCase().split("");
+    dif.splice(dif.length-1,1);
+    dif.splice(0,1);
+    let tim =$("#watch").text().split(":");
+    let score="GOOD".split("");
+    score=scorex(tim);
+    tim.splice(1,0,":");
+    tim.splice(3,0,":");
+    $("."+i+"x."+j+"y")
+    for(let i=0 ;i<9;i++){
+             for(let j=0 ;j<9;j++){
+                $("."+i+"x."+j+"y").css("color","#44b1c7");
+                window.clearInterval(interval);
+                // stoping timer
+                $("."+i+"x."+j+"y").css("border","2px solid rgba(40,40,40)");
+                $("."+i+"x."+j+"y").css("text-shadow","0px 0px 5px rgb(10,10,10) ,0px 0px 10px cyan");
+                if(i==1){
+                    setTimeout(function(){
+                        $("."+i+"x."+j+"y").css("color","cyan");
+                        $("."+i+"x."+j+"y").css("font-weight","500");
+                        $("."+i+"x."+j+"y").css("font-size","20px");
+                        $("."+i+"x."+j+"y").text(a[j]);
+                    },j*60);
+                }
+                else if(i==4 && j>0 && j<6){
+                    setTimeout(function(){
+                        $("."+i+"x."+j+"y").css("letter-spacing","2px");
+                        $("."+i+"x."+j+"y").text(tim[j-1]);
+                    },j*60);
+                }
+                else if(i==3 && j>0 && j<=dif.length ){
+                    setTimeout(function(){
+                        $("."+i+"x."+j+"y").text(dif[j-1]);
+                    },j*60);
+                }else if(i==5 && j>=0 && j<score.length){
+                    setTimeout(function(){
+                        $("."+i+"x."+j+"y").text(score[j]);
+                    },j*60);
+
+                }else if(i==7 && j>5){
+                    setTimeout(function(){
+                        $("."+i+"x."+j+"y").css("color","cyan");
+                     },j*30);
+                }else{
+                    setTimeout(function(){
+                        $("."+i+"x."+j+"y").css("border","2px solid rgba(40,40,40)");
+                        $("."+i+"x."+j+"y").css("text-shadow","none");
+                        $("."+i+"x."+j+"y").css("box-shadow","none");
+                        $("."+i+"x."+j+"y").text(null);
+
+                    },j);
+                }
+
+       }}   
+ setTimeout(function(){
+    $(".7x.6y").text(">");
+    $(".7x.8y").text("<");
+    
+    $(".7x.7y").text(null); 
+    $(".7x.7y").click();      
+    $(".7x.7y").append($('<a href="/">NEW</a>'));
+    $(".7x.7y a").css("text-decoration","none");
+    $(".7x.7y a").css("color","cyan"); 
+},300); 
+            
+};
+
+function wrong(){
+     let br = board();
+    for(let i=0 ;i<9;i++){
+             for(let j=0 ;j<9;j++){
+                setTimeout(function(){
+                    let cel=$("."+i+"x."+j+"y");
+                    if(!($(cel).hasClass("fixed"))){
+                        if(!check(board(),br[i][j],i,j )){
+                          let clr = $("."+i+"x."+j+"y").css("background-color");
+                          setTimeout(function(){
+                             $("."+i+"x."+j+"y").css("box-shadow","inset 0px 0px 2px black , inset 0px 0px 6px rgba(200,70,70)");
+                             $("."+i+"x."+j+"y").css("background-color","rgba(180,60,60)");
+                      },300);
+                          setTimeout(function(){
+                            $("."+i+"x."+j+"y").css("background-color",clr);
+                          },400);      
+                        }}                     
+                    },200); 
+             }}
+};
+
+
