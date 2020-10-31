@@ -233,6 +233,10 @@ nav{
   margin-bottom: 7px;
   letter-spacing: 2px;
 }
+.full-timer p{
+  margin-right: 3px;
+  min-width: 65px;
+}
 /* border of play/pause button */
 .control_border{
   cursor: pointer;

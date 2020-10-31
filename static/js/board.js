@@ -28,7 +28,7 @@ function burg_click(){
          }
          else{
              link.style.animation="navLinkFade 0.35s ease forwards "+(index/7 + 0.27)+"s"; 
-             var x =((10-index)*20)+"px";
+            //  var x =((10-index)*20)+"px";
         
          }
      });
@@ -45,10 +45,11 @@ $(".mobg").click(function(){
         let value = $(this).text();
         let j=clk.cellIndex;
         let i=clk.parentNode.rowIndex; 
-        ins_move(i,j,value,1,$(clk).text());    
+        ins_move(i,j,value,1,$(clk).text());
+    
+       
         $(clk).text(value);
-        let n=clk.cellIndex;
-        let m=clk.parentNode.rowIndex;
+        cookie_array_update();
         checkall(board());
     }
 });
@@ -61,6 +62,7 @@ $(".erase").click(function(){
             ins_move(i,j,$(clk).text(),0,null);
       }
     $(clk).text(" ");
+    cookie_array_update();
     $(clk).css("background-color","rgb(30,30,30)");
     $(clk).css("box-shadow","inset 0px 0px 10px rgb(30,30,30),inset 0px 0px 5px 5px rgb(26,26,26) ");
     checkall(board()); 
@@ -95,18 +97,21 @@ $(".cell").click(function(event) {
         if(key >0 && key <10 && fix){
             var brd = board();
             ins_move(i,j,key,1,$(this).text());
-            $(this).text(key)
+                
+            $(this).text(key);
+            cookie_array_update();
             checkall(board());
             
-        }else if(key == "Backspace" || key =="Delete" && fix){
-           
+        }else if((key == "Backspace" || key =="Delete") && fix)
+          {  
             if(Number($(this).text()) != 0){
                   ins_move(i,j,$(this).text(),0,null);
+                  
             }
             $(this).text(" ");
             $(this).css("background-color","rgb(30,30,30)");
             $(this).css("box-shadow","inset 0px 0px 10px rgb(30,30,30),inset 0px 0px 5px 5px rgb(26,26,26) ");
-            
+            cookie_array_update();
             checkall(board());
         }else if(key == "ArrowUp" && i>0){
               i=i-1;      
@@ -131,8 +136,8 @@ function next(i,j){
 
 // checks the number at specific index
 function check(arr,num,i,j){
-    console.log("arr: "+arr);
-    console.log(" num: "+num+" ("+i+","+j+")");
+    // console.log("arr: "+arr);
+    // console.log(" num: "+num+" ("+i+","+j+")");
     arr[i][j]=0;
     let row=[];
     for(let m=0; m<9;m++){
@@ -151,9 +156,9 @@ function check(arr,num,i,j){
         grp.push(arr[m][n]);
        } 
     }
-    console.log("row: "+row);
-    console.log("col: "+col);
-    console.log("grp: "+grp);
+    // console.log("row: "+row);
+    // console.log("col: "+col);
+    // console.log("grp: "+grp);
     if(row.includes(num) || col.includes(num) || grp.includes(num)){
         return(false);
         
@@ -198,11 +203,20 @@ function checkall(arr){
       }
 }
 
+/////////////////////////////
 ///////TIMER/////////////////
 
-let seconds=0;
-let minutes=0;
-let hours=0;
+let coo = cookies();
+for(i=0;i<3;i++){
+    if(coo[i][0] == " cookie_tim" ){
+      var tim_c = coo[i];
+    }
+    }
+tim_c = tim_c[1].split("A");
+
+let seconds=Number(tim_c[2]);
+let minutes=Number(tim_c[1]);
+let hours=Number(tim_c[0]);
 
 function impr(x){
      //////changing numbers to string of type 00:00:00
@@ -222,6 +236,8 @@ function watch(){
         }
         $("#watch").text(impr(hours)+":"+impr(minutes)+":"+impr(seconds));
 }
+
+
 // play/pause button
 $(".control_border ").click(function() {
     var control=$(".control");
@@ -337,16 +353,20 @@ var moves=[];
 
 $(".restore").click(function(){
  restore();   
+ cookie_array_update()
 });
 $(".save").click(function(){
 save();
 });
 $(".undo").click(function(){
     undo_move();
+    cookie_array_update()
   });
 
 //inserting move in moves
 function ins_move(i,j,n,x,prev){
+    
+    
     let len =moves.length;
     let ar=moves[len-1];
     if(len==0){
@@ -418,7 +438,7 @@ save();
 
 
 /////////////////////////////////////////////////////
-////Final check
+////Final checking the submitted array
 let flagz=true;
 $(".submit").click(function(){
     if(flagz){
@@ -440,6 +460,7 @@ $(".submit").click(function(){
     }
 });
 
+// comments as per the performance
 function scorex(tim){
     if(tim[0]>0){
         return([" ","H","m","m","m",".",".","."]);
@@ -456,7 +477,7 @@ function scorex(tim){
     }
 };
 
-
+//if the submitted board is correct
 function correct(){
     
     $("button , .full-timer ,.drop ,.tableb").css("display","none");
@@ -522,13 +543,14 @@ function correct(){
     
     $(".7x.7y").text(null); 
     $(".7x.7y").click();      
-    $(".7x.7y").append($('<a href="/">NEW</a>'));
+    $(".7x.7y").append($('<a href="/new">NEW</a>'));
     $(".7x.7y a").css("text-decoration","none");
     $(".7x.7y a").css("color","cyan"); 
 },300); 
             
 };
 
+//if the submitted board is incorrect
 function wrong(){
      let br = board();
     for(let i=0 ;i<9;i++){
@@ -551,3 +573,87 @@ function wrong(){
 };
 
 
+
+//////cookies////////
+// universal cookie array
+let  moves_array = [];
+ 
+cookie_move();
+
+
+//fetching all cookies from browser 
+function cookies(){
+    let cookies = document.cookie;
+    cookies=cookies.split(";");
+    for (let i = 0; i < 3; i++) {
+          cookies[i]=cookies[i].split("=")
+    }
+    return(cookies);
+}
+
+// updating time from cookie
+function cookie_tim_update(){
+    let tim=$("#watch").text();
+    tim = tim.split(":");
+    tim=tim.join("A");
+    document.cookie="cookie_tim="+tim;
+
+};
+
+// updaing cookie array from browser cookie
+function cookie_move(){
+    let unfix_ar,unfix_str, cookie=cookies();
+        for(p=0;p<3;p++){
+            if(cookie[p][0] == " cookie_str" ){
+              unfix_str = cookie[p][1];
+            }
+        }
+        if(unfix_str != ""){
+            unfix_ar= unfix_str.split("A");
+               for(i=0;i<unfix_ar.length;i++)
+               {
+                unfix_ar[i]=unfix_ar[i].split("");
+               } 
+             past_moves(unfix_ar);
+             moves_array = unfix_ar.slice();      
+             cookie_array_update();
+            }
+};
+
+//Restoring moves on board from cookie
+function past_moves(ar){
+  ar.forEach(el => {
+   $("."+el[0]+"x."+el[1]+"y").text(el[2]);           
+  });
+  checkall(board());
+};
+
+//Updating cookie array
+function cookie_array_update(){
+    // updating timeer cookie
+    cookie_tim_update();
+
+    moves_array = [];
+  let brd = board();
+  for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        let fix= !($("."+i+"x."+j+"y").hasClass("fixed"));
+           if(brd[i][j] != 0 && fix){
+               moves_array.push([i,j,brd[i][j]]);
+           }
+      }
+  }
+  update_cookie_str();
+};
+
+// Updating the cookie in browser
+function update_cookie_str(){
+    let unfix_str ,unfix_ar= moves_array.slice();
+   for(let i=0; i<unfix_ar.length ;i++) 
+   {
+        unfix_ar[i]= unfix_ar[i].join(""); 
+   }
+    unfix_str= unfix_ar.join("A");   
+    document.cookie="cookie_str="+unfix_str;
+   moves_array=[];
+};

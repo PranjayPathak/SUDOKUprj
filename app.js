@@ -1,6 +1,8 @@
 const express = require("express");
 const body_parser = require("body-parser");
+const cookie_parser = require("cookie-parser");
 const app = express();
+app.use(cookie_parser());
 var arr=[[0,0,0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0,0,0],
@@ -96,22 +98,45 @@ function solve(arr){
 };
 
 app.get("/",function(req,res){
-   board();
-   res.redirect("/board");
+    var cookie_brd=req.cookies.cookie_brd; 
+    var cookie_tim=req.cookies.cookie_tim; 
+    var cookie_str=req.cookies.cookie_str; 
+    // console.log(cookie_brd);
+    if(cookie_brd === undefined){
+        board();
+        res.cookie("cookie_brd",JSON.stringify(arr),{maxAge: 43200000});
+        res.cookie("cookie_tim","00A00A00",{maxAge: 43200000});
+        res.cookie("cookie_str","",{maxAge: 43200000});
+        res.render("board",{array:arr , mode:level, tim:cookie_tim});
+    }else{
+        res.render("board",{array:JSON.parse(cookie_brd) , mode:level , tim:cookie_tim.split("A").join(":")});
+    }
 });
-app.get("/board",function(req,res){
-    res.render("board",{array:arr , mode:level});
-});
+
+app.get("/new",function(req,res){;
+    res.clearCookie('cookie_brd');  
+    res.clearCookie('cookie_tim');  
+    res.clearCookie('cookie_str');  
+    res.redirect("/");
+ });
+
+app.get("/restart",function(req,res){
+    res.cookie("cookie_tim","00A00A00",{maxAge: 43200000});
+    res.cookie("cookie_str","",{maxAge: 43200000});
+    res.redirect("/");
+ });
+
+
 
 app.get("/sol",function(req,res){
      
        let x=solve(arr);
       
        if(x){
-            res.redirect("/board");
+           res.redirect("/");
        }else{
            console.log("unable to solve");
-           res.redirect("/board");
+           res.redirect("/");
  }
 });
 
@@ -136,7 +161,7 @@ for(i= 0; i< 9;i++) {
     let j=Math.ceil(Math.random()*9)-1;
     arr[i][j]=0;
 }
-res.redirect("/board");
+res.redirect("/");
 });
 
 
