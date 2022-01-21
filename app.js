@@ -154,6 +154,9 @@ app.get("/diff/:mode", function (req, res) {
     let j = Math.ceil(Math.random() * 9) - 1;
     arr[i][j] = 0;
   }
+  res.cookie("cookie_brd", JSON.stringify(arr), { maxAge: 43200000 });
+  res.cookie("cookie_tim", "00A00A00", { maxAge: 43200000 });
+  res.cookie("cookie_str", "", { maxAge: 43200000 });
   res.redirect("/");
 });
 
