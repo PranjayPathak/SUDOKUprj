@@ -4,6 +4,13 @@ const cookie_parser = require("cookie-parser");
 const app = express();
 
 app.use(cookie_parser());
+app.use(express.static("static"));
+app.use(body_parser.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+
+app.listen(process.env.PORT || 3000, function () {
+  console.log("server started on port 3000");
+});
 
 let arr = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -18,14 +25,6 @@ let arr = [
   ],
   godarr = arr.slice(),
   level = "medium";
-
-app.use(express.static("static"));
-app.use(body_parser.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
-
-app.listen(process.env.PORT || 3000, function () {
-  console.log("server started on port 3000");
-});
 
 // checks the position of specific cell
 function check(arr, num, i, j) {
