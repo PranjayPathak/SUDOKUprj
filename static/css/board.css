@@ -368,12 +368,14 @@ table {
   border-radius: 13px;
   box-shadow: 0 0 30px 22px rgba(19, 19, 19);
   color: rgba(185, 185, 185);
+  text-align: justify;
 }
 .rules h4 {
   color: rgba(200, 200, 200);
   margin-bottom: 12px;
   text-shadow: 0 0 2px rgb(37, 22, 22), 0 0 5px rgba(24, 24, 24);
 }
+
 .rules hr {
   margin: 25px;
   background-color: rgba(28, 28, 28);
