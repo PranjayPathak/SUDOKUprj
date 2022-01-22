@@ -1,27 +1,4 @@
-<%- include("header"); -%>
-<div class="god">
-<div class="wrapper">  
-
-    <div class="extra">
-          <div class="drop">
-            <p>Difficulty:</p>     
-                <div class="dropdown">
-<p class="dif" tabindex="0"> <%= mode %> <i class="arrow down"></i></p>
-<ul class="invisible">
-<li><a href="/diff/easy">Easy</a></li>
-<li><a href="/diff/medium">Medium</a></li>
-<li><a href="/diff/hard">Hard</a></li>
-<li><a href="/diff/hard">Expert</a></li>
-</ul>
-</div> 
-</div>
-<div class="full-timer" >
-<p class="tim" id="watch"><%= tim %></p>
-<div  tabindex="0"  class="control_border"><div class=" control play" ></div></div>
-</div>
-</div>
-
-    
+<%- include("header"); -%>    
 <div class="tables">
 <div class="tablea">
 <table>
@@ -53,13 +30,4 @@
 <%}%>
 </div>
 </div>
-<div class="extrab"> 
-   <button class="erase">Erase</button>
-   <button class="undo">Undo</button>
-   <button class="save">Save</button>
-   <button class="restore">Restore</button>
-   <button class="submit">Submit</button>
- </div>
- 
- </div>
 <%- include("footer"); -%>

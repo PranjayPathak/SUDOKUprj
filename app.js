@@ -92,13 +92,12 @@ app.get("/", function (req, res) {
   var cookie_brd = req.cookies.cookie_brd;
   var cookie_tim = req.cookies.cookie_tim;
   var cookie_str = req.cookies.cookie_str;
-  // console.log(cookie_brd);
   if (cookie_brd === undefined) {
     board();
     res.cookie("cookie_brd", JSON.stringify(arr), { maxAge: 43200000 });
     res.cookie("cookie_tim", "00A00A00", { maxAge: 43200000 });
     res.cookie("cookie_str", "", { maxAge: 43200000 });
-    res.render("board", { array: arr, mode: level, tim: cookie_tim });
+    res.render("board", { array: arr, mode: level, tim: "00:00:00" });
   } else {
     res.render("board", {
       array: JSON.parse(cookie_brd),
@@ -108,6 +107,7 @@ app.get("/", function (req, res) {
   }
 });
 
+//New board route
 app.get("/new", function (req, res) {
   res.clearCookie("cookie_brd");
   res.clearCookie("cookie_tim");
@@ -115,12 +115,14 @@ app.get("/new", function (req, res) {
   res.redirect("/");
 });
 
+//Restart route (on same board)
 app.get("/restart", function (req, res) {
   res.cookie("cookie_tim", "00A00A00", { maxAge: 43200000 });
   res.cookie("cookie_str", "", { maxAge: 43200000 });
   res.redirect("/");
 });
 
+//Final Solution route
 app.get("/sol", function (req, res) {
   let x = solve(arr);
 
@@ -132,6 +134,7 @@ app.get("/sol", function (req, res) {
   }
 });
 
+//Difficulty mode route
 app.get("/diff/:mode", function (req, res) {
   let mode;
   level = req.params.mode;
@@ -142,12 +145,12 @@ app.get("/diff/:mode", function (req, res) {
   } else {
     mode = 30;
   }
+
   for (i = 0; i < 9; i++) {
     for (j = 0; j < 9; j++) {
       arr[i][j] = godarr[i][j];
     }
   }
-
   for (let x = 0; x < mode; x++) {
     let i = Math.ceil(Math.random() * 9) - 1;
     let j = Math.ceil(Math.random() * 9) - 1;
@@ -156,6 +159,7 @@ app.get("/diff/:mode", function (req, res) {
   res.cookie("cookie_brd", JSON.stringify(arr), { maxAge: 43200000 });
   res.cookie("cookie_tim", "00A00A00", { maxAge: 43200000 });
   res.cookie("cookie_str", "", { maxAge: 43200000 });
+
   res.redirect("/");
 });
 
