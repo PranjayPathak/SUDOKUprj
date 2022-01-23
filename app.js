@@ -234,5 +234,3 @@ function board() {
     arr[i][j] = 0;
   }
 }
-
-module.exports = app;
