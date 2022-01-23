@@ -1,4 +1,4 @@
-Sudoku Game & solver(using backracking).
+Sudoku Game & Solution Using Backracking Visualization.
 http://sudokuprj.herokuapp.com
 
   <h4 >About the Project</h4>
