@@ -4,7 +4,7 @@
   "description": "Sudoku game with solver visualization using backtracking",
   "main": "app.js",
   "engines": {
-    "node": "15.x"
+    "node": "14.x"
   },
   "scripts": {
     "start": "node app.js"
