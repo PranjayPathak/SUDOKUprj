@@ -6,6 +6,9 @@ http://sudokuprj.herokuapp.com
 <br/>
 The solver visualization part is implemented using the backtracking algorithm and asynchronous Javascript for animation (Click on "SOLVE" to visualize the backtracking algorithm to solve the Sudoku game).
 </p>
+
+![image](https://user-images.githubusercontent.com/53118772/153374762-e746daf7-4869-4f56-b44c-d6babe5de42b.png)
+
    <hr/>
  <h4> How to play Sudoku</h4>
     <p>
