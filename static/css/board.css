@@ -143,7 +143,7 @@ nav {
 /* ////////////////////// */
 /* Dropdown for difficulty */
 .drop {
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   /* font-size: 17px; */
   font-size: 16px;
   padding: 5px;
@@ -378,6 +378,7 @@ table {
 /* rules div */
 .rules {
   font-size: 16px;
+  letter-spacing: 1px;
   line-height: 1.7;
   margin: 35px auto;
   width: 85vw;
@@ -395,7 +396,6 @@ table {
   text-shadow: 0 0 2px rgb(37, 22, 22), 0 0 5px rgba(24, 24, 24);
 
   /* // */
-
   font-size: 1.3rem;
   font-weight: 500;
   line-height: 1.2;
