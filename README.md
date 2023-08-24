@@ -1,6 +1,6 @@
 <h1 align="center">Sudoku Game & Solver : Using Backtracking Visualization</h1>
 
-## About the Project
+## About the Project 
    <p>A Sudoku game developed with Express.js, EJS, JQuery and CSS. The game provides all the fundamental aspects of the flow, uses cookies to store the game status between re-renders and is playable on any device having a browser (touchscreen or keyboard).
 <br/>
 The solver visualization part is implemented using the backtracking algorithm and asynchronous Javascript for animation (Click on "SOLVE" to visualize the backtracking algorithm to solve the Sudoku game).
